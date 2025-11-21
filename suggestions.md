@@ -101,3 +101,109 @@ Here’s the previous discussion translated into English:
 | Canopy   | Concave hull or voxel-based volume | Medium (leaf-level detail not feasible) |
 
 ---
+Here is the English version of the previous explanation about **TreeQSM**:
+
+---
+
+## 🌳 What is TreeQSM?
+
+**TreeQSM** (Tree Quantitative Structure Model) is an open-source tool designed to **reconstruct 3D models of trees**—specifically the **trunk and branches**—from LIDAR point cloud data. It represents trees as a set of **connected cylinders**, providing not just visual structure but also **quantitative properties** like volume, branch length, and branching order.
+
+* **Developed by**: Wageningen University (Raumonen et al., 2013)
+* **Input**: 3D point cloud of a single tree (cleaned of leaves and ground)
+* **Output**: Tree structure modeled with cylinders (QSM)
+* **Use cases**: Forest biomass estimation, ecological studies, tree growth modeling, etc.
+
+---
+
+## ✅ Key Features
+
+| Feature               | Details                                                   |
+| --------------------- | --------------------------------------------------------- |
+| **Focus**             | Trunk and branches (no leaves)                            |
+| **Output format**     | `.mat` (MATLAB), can be visualized/exported as 3D objects |
+| **Method**            | Cylinder fitting based on spatial distribution of points  |
+| **Input requirement** | Clean, **single-tree point cloud** with high detail       |
+| **Platform**          | MATLAB / GNU Octave CLI, some Python wrappers exist       |
+
+---
+
+## 🔁 Processing Workflow
+
+1. **Input Preprocessing**
+
+   * Ground removal
+   * Tree segmentation (only one tree per run)
+   * Optional: leaf removal if present
+
+2. **Skeletonization**
+
+   * Determines the main trunk path and branch structures from point cloud topology
+
+3. **Cylinder Fitting**
+
+   * Each segment is modeled as a cylinder (length, radius, orientation)
+
+4. **Model Hierarchization**
+
+   * Tree structure is stored hierarchically: trunk → main branches → sub-branches
+
+5. **Output**
+
+   * Quantitative data (branch volume, length, tapering)
+   * 3D cylinder model for visualization
+
+---
+
+## 🧰 Toolchain Integration
+
+You typically use TreeQSM as part of a broader pipeline:
+
+| Step              | Tool                               | Purpose                                       |
+| ----------------- | ---------------------------------- | --------------------------------------------- |
+| 1. Preprocessing  | PDAL, CloudCompare                 | Ground filtering, noise removal, segmentation |
+| 2. QSM Generation | **TreeQSM**                        | Reconstruct trunk and branches                |
+| 3. Visualization  | Blender, Meshlab, MATLAB 3D viewer | Render QSM model                              |
+
+---
+
+## ⚠️ Limitations
+
+| Issue                      | Note                                                                       |
+| -------------------------- | -------------------------------------------------------------------------- |
+| **No canopy/leaves**       | You must remove foliage before processing (only wood structure is modeled) |
+| **Single tree input**      | Point cloud must be isolated to a single tree                              |
+| **Data quality dependent** | Missing or sparse points = inaccurate model                                |
+| **Environment**            | Requires MATLAB or GNU Octave (not native to Python or GUI apps)           |
+
+---
+
+## 📊 Applications
+
+* Tree volume and biomass estimation
+* Forest structure analysis
+* Ecological modeling (branching architecture)
+* Scientific visualization
+* Input for physical simulations or 3D printing
+
+---
+
+## 🔗 References
+
+* GitHub: [TreeQSM Repository](https://github.com/InverseTampere/TreeQSM)
+* Paper: Raumonen et al. (2013), *“Fast automatic precision tree models from terrestrial laser scanner data”*
+
+---
+
+## ✅ When to Use TreeQSM
+
+Use TreeQSM if:
+
+* Your goal is to model **structural tree geometry** (not appearance)
+* You have **terrestrial LIDAR data** with detailed wood structure
+* You need accurate **metrics** like volume, length, or branch angles
+
+---
+
+If you’re ready to try it, I can help guide you through preparing your point cloud or running the tool via MATLAB or Octave. Just let me know your setup or upload a sample file.
+
